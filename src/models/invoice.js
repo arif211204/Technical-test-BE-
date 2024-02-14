@@ -9,21 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-    }
+    static associate(models) {    }
   }
   Invoice.init({
     invoiceNo: {
+      required:true,
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
     date: {
+      required:true,
       type: DataTypes.DATE,
       allowNull: false
     },
     customerName: {
+      required:true,
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     salespersonName: {
+      required:true,
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -38,10 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     paymentType: {
+      required:true,
       type: DataTypes.ENUM('CASH', 'CREDIT'),
       allowNull: false
     },
     notes: {
+      required: false,
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
