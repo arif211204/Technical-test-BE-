@@ -3,6 +3,7 @@ const cors = require('cors')
 const express = require('express');
 const mysql = require('mysql2');
 const db = require('./models');
+const { invoiceRouter,productRouter } = require('./routes');
 
 
 const PORT = process.env.PORT || 2000;
@@ -16,14 +17,18 @@ const pool = mysql.createPool({
 });
   
 const app = express()
+app.use(express.json());
 app.use(cors())
+app.use('/invoice', invoiceRouter);
+app.use('/product',productRouter)
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
+  // if you add table you can unComment this line 30
+  // if you want to delete all table change alter to force 
+  
     db.sequelize.sync({ alter: true });
 });
-console.log(process.env.PORT);
-console.log(process.env.MYSQL_HOST );
 
 app.use((req, res, next) => {
     pool.getConnection((err, connection) => {
