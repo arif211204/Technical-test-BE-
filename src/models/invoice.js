@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         len: [2, 255] 
       }
     },
-    salespersonName: {
+    salesPersonName: {
       required:true,
       type: DataTypes.STRING,
       allowNull: false,

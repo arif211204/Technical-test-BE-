@@ -26,32 +26,27 @@ const invoiceController = {
     createInvoice: async (req, res) => {
         try {
             const data = { ...req.body }
-            const newProduct = await Invoice.create(data)
-            sendResponse({res,statusCode:200,data:newProduct})
+            const newInvoices = await Invoice.create(data)
+            sendResponse({res,statusCode:200,data:newInvoices})
         } catch (error) {
             sendResponse({res,error})
         }
     },
     editInvoice: async (req, res) => {
         try {
-            const [data] = await Invoice.update(req.body, {
-                id:req.params.id
-            })
+            const [data] = await Invoice.update(req.body, { where: { id: req.params.id }})
             if (data === 0) throw ResponseError('invoice not found', 404)
-            sendResponse({res,statusCode:200,data:data})
+            sendResponse({res,statusCode:200})
         } catch (error) {
-            sendResponse({res,error})
+            sendResponse({res, error})
         }
-      
-
     },
-    deletedInvoiceById: async (req, res) => {
+    deletedInvoiceById:  (req, res) => {
         try {
-            const data = await Invoice.destroy({where :{id:req.params.id}})
+            const data =  Invoice.destroy({where :{id:req.params.id}})
              if (data === 0) throw new ResponseError('invoice not found', 404)
         } catch (error) {
             sendResponse({ res, error });
-
         }
     }
 }

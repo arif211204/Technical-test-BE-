@@ -11,11 +11,7 @@ const invoiceValidator = {
                 customerName: Joi.string().min(2).required(),
                 salesPersonName: Joi.string().min(2).required(),
                 paymentType: Joi.string().valid('CASH', 'CREDIT').required(),
-                notes: Joi.string().min(5).optional(),
-                products: Joi.array().items(Joi.object({
-                productName: Joi.string().required(),
-                quantity: Joi.number().integer().min(1).required(),
-                })).required()
+                notes: Joi.string().min(5).required(),
             });
             
             const validationResult = schema.validate(req.body);
@@ -51,7 +47,7 @@ const invoiceValidator = {
                 customerName: Joi.string().min(2).required(),
                 salesPersonName: Joi.string().min(2).required(),
                 paymentType: Joi.string().valid('CASH', 'CREDIT').required(),
-                notes: Joi.string().min(5).optional(),
+                notes: Joi.string().min(5).required(),
             })
             const resultBody = schemaBody.validate(req.body);
             if (resultBody.error)
@@ -64,11 +60,11 @@ const invoiceValidator = {
     updateInvoiceById: (req, res, next) => {
         try {
             const schemaBody = Joi.object({
-                invoiceNo: Joi.string().min(1).required(),
-                date: Joi.date().required(),
-                customerName: Joi.string().min(2).required(),
-                salesPersonName: Joi.string().min(2).required(),
-                paymentType: Joi.string().valid('CASH', 'CREDIT').required(),
+                invoiceNo: Joi.string().min(1),
+                date: Joi.date(),
+                customerName: Joi.string().min(2),
+                salesPersonName: Joi.string().min(2),
+                paymentType: Joi.string().valid('CASH', 'CREDIT'),
                 notes: Joi.string().min(5).optional(),
             })
             const resultBody = schemaBody.validate(req.body);
