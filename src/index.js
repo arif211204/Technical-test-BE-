@@ -27,7 +27,7 @@ app.listen(PORT, () => {
   // if you add table you can unComment this line 30
   // if you want to delete all table change alter to force 
   
-    db.sequelize.sync({ alter: true });
+    // db.sequelize.sync({ alter: true });
 });
 
 app.use((req, res, next) => {
