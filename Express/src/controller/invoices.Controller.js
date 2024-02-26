@@ -1,4 +1,4 @@
-const { Invoice } = require('../models');
+const { Invoice,Product } = require('../models');
 const sendResponse = require('../utils/sendResponse');
 const { ResponseError } = require('../errors');
 
@@ -6,8 +6,15 @@ const { ResponseError } = require('../errors');
 const invoiceController = {
     getInvoice: async (req, res) => {
         try {
-        const data = await Invoice.findAll()
-            sendResponse({res, statusCode:200, data:data})
+            const invoices = await Invoice.findAll({
+                include:[{
+                  model: Product,
+                    attributes: ['id', 'itemName', 'quantity', 'totalCost', 'totalPrice'],
+                  required:true
+                }]
+            });
+            sendResponse({ res, statusCode: 200, data: invoices })
+
         } catch (error) {
             sendResponse({res,error})
             
